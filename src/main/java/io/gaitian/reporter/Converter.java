@@ -1,23 +1,27 @@
 package io.gaitian.reporter;
 
-import fr.opensagres.poi.xwpf.converter.pdf.PdfConverter;
-import fr.opensagres.poi.xwpf.converter.pdf.PdfOptions;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.jodconverter.core.DocumentConverter;
+import org.jodconverter.core.document.DefaultDocumentFormatRegistry;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
 import java.io.OutputStream;
 
 @Slf4j
+@RequiredArgsConstructor
 @Service
 public class Converter {
+    private final DocumentConverter converter;
 
     @SneakyThrows
     public void docxToPdf(InputStream is, OutputStream os) {
-        var doc = new XWPFDocument(is);
-        var options = PdfOptions.create();
-        PdfConverter.getInstance().convert(doc, os, options);
+        converter.convert(is)
+                .as(DefaultDocumentFormatRegistry.DOCX)
+                .to(os)
+                .as(DefaultDocumentFormatRegistry.PDF)
+                .execute();
     }
 }

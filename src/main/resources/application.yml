@@ -1,0 +1,7 @@
+jodconverter:
+  remote:
+    enabled: true
+    url: http://localhost:9980
+logging:
+  level:
+    org.jodconverter: DEBUG

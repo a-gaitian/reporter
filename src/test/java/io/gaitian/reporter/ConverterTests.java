@@ -14,9 +14,9 @@ class ConverterTests {
     private Converter converter;
 
     @Test
-    void loremIpsumConvert() throws IOException {
+    void loremIpsumDocxConvert() throws IOException {
         try(var is = getClass().getClassLoader().getResourceAsStream("Lorem Ipsum.docx")) {
-            try(var os = new FileOutputStream("Lorem Ipsum.pdf")) {
+            try(var os = new FileOutputStream("src/test/resources/Lorem Ipsum.pdf")) {
                 assert is != null;
                 converter.docxToPdf(is, os);
             }
@@ -24,9 +24,9 @@ class ConverterTests {
     }
 
     @Test
-    void demoConvert() throws IOException {
+    void demoDocxConvert() throws IOException {
         try(var is = getClass().getClassLoader().getResourceAsStream("Demo.docx")) {
-            try(var os = new FileOutputStream("Demo.pdf")) {
+            try(var os = new FileOutputStream("src/test/resources/Demo.pdf")) {
                 assert is != null;
                 converter.docxToPdf(is, os);
             }

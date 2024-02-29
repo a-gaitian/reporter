@@ -1,0 +1,11 @@
+services:
+  collabora:
+    image: collabora/code
+    container_name: collabora
+    cap_add:
+      - MKNOD
+    environment:
+      - "extra_params=--o:ssl.enable=false --o:ssl.termination=true"
+    ports:
+      - 9980:9980
+    restart: unless-stopped

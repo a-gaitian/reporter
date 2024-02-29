@@ -22,8 +22,11 @@ repositories {
 
 dependencies {
 
+    implementation("org.jodconverter:jodconverter-remote:4.4.7")
+    implementation("org.jodconverter:jodconverter-spring-boot-starter:4.4.7")
+    //implementation("fr.opensagres.xdocreport:fr.opensagres.xdocreport.converter.odt.odfdom:2.0.4")
     //implementation("fr.opensagres.xdocreport:fr.opensagres.xdocreport.converter.docx.docx4j:2.0.4")
-    implementation("fr.opensagres.xdocreport:fr.opensagres.xdocreport.converter.docx.xwpf:2.0.4")
+    //implementation("fr.opensagres.xdocreport:fr.opensagres.xdocreport.converter.docx.xwpf:2.0.4")
     //implementation("fr.opensagres.xdocreport:fr.opensagres.xdocreport.document.docx:2.0.4")
     //implementation("fr.opensagres.xdocreport:xdocreport:2.0.4")
     //implementation("org.apache.poi:poi-ooxml:5.2.5")
