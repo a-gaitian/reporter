@@ -24,6 +24,11 @@ dependencies {
 
     implementation("org.jodconverter:jodconverter-remote:4.4.7")
     implementation("org.jodconverter:jodconverter-spring-boot-starter:4.4.7")
+
+    implementation("fr.opensagres.xdocreport:fr.opensagres.xdocreport.template.velocity:2.0.4")
+    implementation("fr.opensagres.xdocreport:fr.opensagres.xdocreport.document.docx:2.0.4")
+    implementation("fr.opensagres.xdocreport:fr.opensagres.xdocreport.document:2.0.4")
+
     implementation("org.apache.poi:poi-ooxml:5.2.5")
 
     implementation("org.springframework.boot:spring-boot-starter-actuator")

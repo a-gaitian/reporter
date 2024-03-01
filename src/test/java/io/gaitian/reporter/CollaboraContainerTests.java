@@ -8,7 +8,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 @Testcontainers
 @SpringBootTest
-public abstract class CollaboraContainerTests {
+abstract class CollaboraContainerTests {
 
     @Container
     static ReporterCompose compose =
