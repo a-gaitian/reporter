@@ -1,7 +1,11 @@
+
+collabora:
+  url: http://collabora:9980
+
 jodconverter:
   remote:
     enabled: true
-    url: http://localhost:9980
+    url: ${collabora.url}
 logging:
   level:
     org.jodconverter: DEBUG

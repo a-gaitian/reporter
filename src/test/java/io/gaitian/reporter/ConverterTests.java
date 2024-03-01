@@ -2,13 +2,12 @@ package io.gaitian.reporter;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-@SpringBootTest
-class ConverterTests {
+
+class ConverterTests extends CollaboraContainerTests {
 
     @Autowired
     private Converter converter;
