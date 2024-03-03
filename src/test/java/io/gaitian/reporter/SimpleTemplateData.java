@@ -27,6 +27,6 @@ public final class SimpleTemplateData {
                     new Worker("Петр", "Петров", 31),
                     new Worker("Сергей", "Сергеев", 32)
             ),
-            "banner", new ReadOnlyFile(SimpleTemplateData.class.getClassLoader().getResourceAsStream("banner.png"), Format.PNG)
+            "banner", new ReadOnlyFile(SimpleTemplateData.class.getClassLoader().getResourceAsStream("banner.png"), Format.IMAGE)
     );
 }

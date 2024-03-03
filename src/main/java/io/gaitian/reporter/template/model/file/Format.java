@@ -8,7 +8,5 @@ public enum Format {
     ODT,
     PDF,
 
-    // Image
-    PNG,
-    JPEG
+    IMAGE,
 }

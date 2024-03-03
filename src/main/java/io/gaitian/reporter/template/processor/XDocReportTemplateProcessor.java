@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Map;
-import java.util.function.BiConsumer;
 
 @Slf4j
 @Service
@@ -33,7 +32,8 @@ public class XDocReportTemplateProcessor implements TemplateProcessor {
 
         preProcessRecursive(data, context, fieldsMetadata, "");
 
-        log.trace("context:{}", context);
+        log.trace("Context: {}", context.getContextMap());
+        log.trace("Metadata: {}", fieldsMetadata.getFieldsAsList());
 
         report.process(context, os);
     }
@@ -50,32 +50,40 @@ public class XDocReportTemplateProcessor implements TemplateProcessor {
             String elementKey = prefix + elementName;
             Object element = entry.getValue();
 
-            log.trace("Pre processing element: {} = {}", elementName, element);
+            preProcessElement(elementName, elementKey, element, context, metadata);
+        }
+    }
 
-            BiConsumer<String, Object> put = (String key, Object value) -> {
-                log.trace("Put element: {} = {}", key, value);
-                context.put(key, value);
-            };
+    @SneakyThrows
+    private void preProcessElement(
+            String elementName,
+            String elementKey,
+            Object element,
+            IContext context,
+            FieldsMetadata metadata
+    ) {
 
-            if (element instanceof Map<?,?>) {
-                //noinspection unchecked
-                preProcessRecursive((Map<String, Object>) element, context, metadata, elementKey + ".");
+        log.trace("Pre processing element: {} = {}", elementName, element);
 
-            } else if (element instanceof Iterable<?>) {
-                metadata.addFieldAsList(elementKey);
-                put.accept(elementKey, element);
+        if (element instanceof Map<?,?>) {
+            //noinspection unchecked
+            preProcessRecursive((Map<String, Object>) element, context, metadata, elementKey + ".");
 
-            } else if (element instanceof File) {
-                metadata.addFieldAsImage(elementKey);
-                put.accept(elementKey, ((File) element).getInputStream());
+        } else if (element instanceof Iterable<?>) {
+            metadata.addFieldAsList(elementKey);
+            context.put(elementKey, element);
 
-            } else if (ClassUtils.isPrimitiveOrWrapper(element.getClass()) || element instanceof String) {
-                put.accept(elementKey, element);
+        } else if (element instanceof File) {
+            metadata.addFieldAsImage(elementKey);
+            context.put(elementKey, ((File) element).getInputStream());
 
-            } else {
-                metadata.load(elementKey, element.getClass());
-                put.accept(elementKey, element);
-            }
+        } else if (ClassUtils.isPrimitiveOrWrapper(element.getClass()) || element instanceof String) {
+            metadata.addField(elementKey, false, null, null, null);
+            context.put(elementKey, element);
+
+        } else {
+            metadata.load(elementKey, element.getClass());
+            context.put(elementKey, element);
         }
     }
 }
