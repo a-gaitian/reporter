@@ -1,4 +1,4 @@
-package io.gaitian.reporter;
+package io.gaitian.reporter.base;
 
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.DynamicPropertyRegistry;
@@ -8,7 +8,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 @Testcontainers
 @SpringBootTest
-abstract class CollaboraContainerTests {
+public abstract class CollaboraContainerTests {
 
     @Container
     static ReporterCompose compose =

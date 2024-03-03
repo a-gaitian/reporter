@@ -6,6 +6,3 @@ jodconverter:
   remote:
     enabled: true
     url: ${collabora.url}
-logging:
-  level:
-    org.jodconverter: DEBUG

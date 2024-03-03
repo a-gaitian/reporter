@@ -1,4 +1,4 @@
-package io.gaitian.reporter;
+package io.gaitian.reporter.template.processor;
 
 import fr.opensagres.xdocreport.document.registry.XDocReportRegistry;
 import fr.opensagres.xdocreport.template.TemplateEngineKind;

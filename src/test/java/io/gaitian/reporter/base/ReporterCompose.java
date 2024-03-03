@@ -1,4 +1,4 @@
-package io.gaitian.reporter;
+package io.gaitian.reporter.base;
 
 import org.testcontainers.containers.ComposeContainer;
 import org.testcontainers.containers.wait.strategy.Wait;
