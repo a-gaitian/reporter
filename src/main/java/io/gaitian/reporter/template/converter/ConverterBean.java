@@ -1,6 +1,6 @@
 package io.gaitian.reporter.template.converter;
 
-import io.gaitian.reporter.template.model.Format;
+import io.gaitian.reporter.template.model.file.Format;
 
 import java.io.InputStream;
 import java.io.OutputStream;

@@ -4,7 +4,7 @@ import io.gaitian.reporter.base.SpringBootTestBase;
 import io.gaitian.reporter.template.converter.ConverterBean;
 import io.gaitian.reporter.template.converter.ConverterProvider;
 import io.gaitian.reporter.template.converter.annotation.Converts;
-import io.gaitian.reporter.template.model.Format;
+import io.gaitian.reporter.template.model.file.Format;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

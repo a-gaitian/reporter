@@ -2,7 +2,7 @@ package io.gaitian.reporter;
 
 import io.gaitian.reporter.base.CollaboraContainerTests;
 import io.gaitian.reporter.template.converter.JodConverter;
-import io.gaitian.reporter.template.model.Format;
+import io.gaitian.reporter.template.model.file.Format;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

@@ -1,7 +1,7 @@
 package io.gaitian.reporter.template.converter;
 
 import io.gaitian.reporter.template.converter.annotation.Converts;
-import io.gaitian.reporter.template.model.Format;
+import io.gaitian.reporter.template.model.file.Format;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +27,9 @@ public class JodConverter implements ConverterBean {
 
     @SneakyThrows
     public void convert(Format from, InputStream is, Format to, OutputStream os) {
+
+        log.trace("Converting from {} to {}", from, to);
+
         converter.convert(is)
                 .as(docFormat(from))
                 .to(os)
