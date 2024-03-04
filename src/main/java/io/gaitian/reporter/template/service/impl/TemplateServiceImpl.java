@@ -1,12 +1,12 @@
-package io.gaitian.reporter;
+package io.gaitian.reporter.template.service.impl;
 
-import io.gaitian.reporter.template.TemplateService;
 import io.gaitian.reporter.template.converter.ConverterProvider;
 import io.gaitian.reporter.template.model.file.File;
 import io.gaitian.reporter.template.model.file.Format;
 import io.gaitian.reporter.template.model.file.InMemoryFile;
 import io.gaitian.reporter.template.model.file.ReadOnlyFile;
 import io.gaitian.reporter.template.processor.TemplateProcessor;
+import io.gaitian.reporter.template.service.TemplateService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

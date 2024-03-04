@@ -1,5 +1,6 @@
-package io.gaitian.reporter.template.converter;
+package io.gaitian.reporter.template.converter.impl;
 
+import io.gaitian.reporter.template.converter.ConverterBean;
 import io.gaitian.reporter.template.converter.annotation.Converts;
 import io.gaitian.reporter.template.model.file.Format;
 import lombok.RequiredArgsConstructor;

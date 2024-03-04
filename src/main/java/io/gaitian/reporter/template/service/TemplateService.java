@@ -1,4 +1,4 @@
-package io.gaitian.reporter.template;
+package io.gaitian.reporter.template.service;
 
 import io.gaitian.reporter.template.model.file.File;
 import io.gaitian.reporter.template.model.file.Format;

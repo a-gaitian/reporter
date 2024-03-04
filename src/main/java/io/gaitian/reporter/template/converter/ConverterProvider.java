@@ -3,39 +3,40 @@ package io.gaitian.reporter.template.converter;
 import io.gaitian.reporter.template.converter.annotation.Converts;
 import io.gaitian.reporter.template.model.file.Format;
 import jakarta.annotation.PostConstruct;
-import lombok.Setter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.keyvalue.MultiKey;
 import org.apache.commons.collections4.map.MultiKeyMap;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
+import java.util.Map;
+import java.util.stream.Stream;
+
 @Slf4j
+@RequiredArgsConstructor
 @Component
-public final class ConverterProvider implements ApplicationContextAware {
+public final class ConverterProvider {
 
-    @Setter
-    private ApplicationContext applicationContext;
+    private final Map<String, ConverterBean> converterBeans;
 
-    private final MultiKeyMap<Format, ConverterBean> converterBeans = new MultiKeyMap<>();
+    @SuppressWarnings("NotNullFieldNotInitialized") // Initialized in @PostConstruct
+    private MultiKeyMap<Format, ConverterBean> formatsToConverterBean;
 
     public Converter getConverter(Format from, Format to) {
-        var converterBean = converterBeans.get(from, to);
+        var converterBean = formatsToConverterBean.get(from, to);
 
         if (converterBean == null)
             throw new IllegalArgumentException("No converter found for " + from + " -> " + to);
 
-        return (is, os) -> {
-            converterBean.convert(from, is, to, os);
-        };
+        return (is, os) -> converterBean.convert(from, is, to, os);
     }
 
     @PostConstruct
     public void init() {
 
-        var converterBeans = applicationContext.getBeansOfType(ConverterBean.class);
-
-        for (var entry : converterBeans.entrySet()) {
+        formatsToConverterBean = converterBeans.entrySet().stream().flatMap(entry -> {
             String beanName = entry.getKey();
             ConverterBean bean = entry.getValue();
 
@@ -44,23 +45,52 @@ public final class ConverterProvider implements ApplicationContextAware {
             if (convertsAnnotations.length == 0)
                 throw new IllegalStateException("Converter " + beanName + " must have at least one @Converts annotation");
 
-            for (var convertsAnnotation : convertsAnnotations) {
-                for (var from : convertsAnnotation.from()) {
-                    for (var to : convertsAnnotation.to()) {
-                        if(this.converterBeans.containsKey(from, to)) {
-                            log.warn(
-                                    "Several converters for {} -> {} : {} (will be used) and {} (will be ignored)",
-                                    from, to,
-                                    this.converterBeans.get(from, to).getClass().getSimpleName(),
-                                    bean.getClass().getSimpleName()
-                            );
-                        } else {
-                            log.trace("Registering converter {} -> {} : {}", from, to, bean.getClass().getSimpleName());
-                            this.converterBeans.put(from, to, bean);
-                        }
-                    }
-                }
-            }
+            return Arrays.stream(convertsAnnotations)
+                    .flatMap(annotation -> processBeanAnnotation(annotation, bean));
+
+        }).collect(
+                MultiKeyMap::new,
+                (map, entry) -> {
+                    var multiKey = entry.getKey();
+                    var from = multiKey.getKey(0);
+                    var to = multiKey.getKey(1);
+
+                    var bean = chooseConverter(multiKey, map.get(multiKey), entry.getValue());
+                    log.trace("Registering converter {} -> {} : {}", from, to, bean.getClass().getSimpleName());
+                    map.put(multiKey, bean);
+                },
+                (map, other) -> other.forEach((multiKey, converterBean) -> {
+                    //noinspection unchecked
+                    map.put(multiKey, chooseConverter((MultiKey<Format>) multiKey, map.get(multiKey), converterBean));
+                })
+        );
+    }
+
+    private Stream<Map.Entry<MultiKey<Format>, ConverterBean>> processBeanAnnotation(
+            Converts annotation,
+            ConverterBean bean
+    ) {
+        return Arrays.stream(annotation.from())
+                .flatMap(from ->
+                        Arrays.stream(annotation.to())
+                                .map(to -> new MultiKey<>(from, to))
+                ).map(multiKey -> Map.entry(multiKey, bean));
+    }
+
+    private ConverterBean chooseConverter(
+            MultiKey<Format> multiKey,
+            @Nullable ConverterBean existing,
+            ConverterBean other
+    ) {
+        if (existing != null) {
+            log.warn(
+                    "Several converters for {} -> {} : {} (will be used) and {} (will be ignored)",
+                    multiKey.getKey(0), multiKey.getKey(1),
+                    existing.getClass().getSimpleName(),
+                    other.getClass().getSimpleName()
+            );
+            return existing;
         }
+        return other;
     }
 }

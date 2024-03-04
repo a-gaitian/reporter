@@ -1,8 +1,7 @@
 package io.gaitian.reporter;
 
-import fr.opensagres.xdocreport.core.XDocReportException;
 import io.gaitian.reporter.base.SpringBootTestBase;
-import io.gaitian.reporter.template.processor.XDocReportTemplateProcessor;
+import io.gaitian.reporter.template.processor.impl.XDocReportTemplateProcessor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -15,7 +14,7 @@ class XDocReportTemplateProcessorTests extends SpringBootTestBase {
     private XDocReportTemplateProcessor processor;
 
     @Test
-    void simpleTemplate() throws IOException, XDocReportException {
+    void simpleTemplate() throws IOException {
         try (var is = getClass().getClassLoader().getResourceAsStream("Simple Template.docx")) {
             try (var os = new FileOutputStream("src/test/resources/Simple Template Result.docx")) {
                 assert is != null;

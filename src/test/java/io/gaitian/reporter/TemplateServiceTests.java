@@ -1,9 +1,9 @@
 package io.gaitian.reporter;
 
 import io.gaitian.reporter.base.CollaboraContainerTests;
-import io.gaitian.reporter.template.TemplateService;
 import io.gaitian.reporter.template.model.file.Format;
 import io.gaitian.reporter.template.model.file.ReadOnlyFile;
+import io.gaitian.reporter.template.service.TemplateService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

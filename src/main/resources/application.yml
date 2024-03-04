@@ -20,4 +20,3 @@ spring:
 logging:
   level:
     io.gaitian: TRACE
-    org.apache.velocity: TRACE

@@ -1,10 +1,11 @@
-package io.gaitian.reporter.template.processor;
+package io.gaitian.reporter.template.processor.impl;
 
 import fr.opensagres.xdocreport.document.registry.XDocReportRegistry;
 import fr.opensagres.xdocreport.template.IContext;
 import fr.opensagres.xdocreport.template.TemplateEngineKind;
 import fr.opensagres.xdocreport.template.formatter.FieldsMetadata;
 import io.gaitian.reporter.template.model.file.File;
+import io.gaitian.reporter.template.processor.TemplateProcessor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ClassUtils;
@@ -38,7 +39,6 @@ public class XDocReportTemplateProcessor implements TemplateProcessor {
         report.process(context, os);
     }
 
-    @SneakyThrows
     private void preProcessRecursive(
             Map<String, Object> currentData,
             IContext context,
