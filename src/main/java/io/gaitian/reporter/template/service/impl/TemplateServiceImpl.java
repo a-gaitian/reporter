@@ -28,6 +28,9 @@ public class TemplateServiceImpl implements TemplateService {
 
         processor.process(template.getInputStream(), processedTemplate.getOutputStream(), data);
 
+        if(processedTemplate.getFormat() == outputFormat)
+            return new ReadOnlyFile(processedTemplate);
+
         File result = new InMemoryFile(outputFormat);
 
         converterProvider

@@ -35,7 +35,7 @@ public class ReportRequestMapper {
             throw new IllegalArgumentException("ReportRequest data parse failed", e);
         }
 
-        return mapRecursive(source, request.getImages());
+        return mapRecursive(source, request.getImages() != null ? request.getImages() : new MultipartFile[0]);
     }
 
     private Map<String, Object> mapRecursive(Map<String, Object> source, MultipartFile[] images) {
