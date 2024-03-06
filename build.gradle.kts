@@ -1,3 +1,5 @@
+import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
+
 plugins {
     java
     id("org.springframework.boot") version "3.2.3"
@@ -5,7 +7,15 @@ plugins {
 }
 
 group = "io.gaitian"
-version = "0.0.1-SNAPSHOT"
+version = "0.1.0"
+
+tasks.withType<BootBuildImage> {
+    imageName = "io.gaitian/reporter"
+    tags = listOf(
+        "${imageName.get()}:latest",
+        "${imageName.get()}:$version"
+    )
+}
 
 java {
 }

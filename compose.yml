@@ -1,4 +1,12 @@
 services:
+  reporter:
+    image: io.gaitian/reporter
+    environment:
+      collabora.url: http://collabora:9980
+    ports:
+      - 8050:8000
+    restart: unless-stopped
+
   collabora:
     image: collabora/code
     cap_add:
